@@ -1,0 +1,17 @@
+{
+	"imports": {
+		"@fs": "https://deno.land/std@0.160.0/fs/mod.ts",
+		"@oak": "https://deno.land/x/oak@v11.1.0/mod.ts",
+		"@cors": "https://deno.land/x/oak_cors@v0.1.1/mod.ts",
+		"@mongodb": "https://deno.land/x/mongo@v0.31.0/mod.ts",
+		"@mongodb/types": "https://deno.land/x/mongo@v0.31.0/src/types.ts",
+		"@asserts": "https://deno.land/std@0.160.0/testing/asserts.ts",
+		"@utils": "./src/utils/mod.ts",
+		"@mongo/": "./src/mongo/",
+		"@curd": "./src/curd/mod.ts",
+		"@ctrls/": "./src/controllers/",
+		"@ws": "./src/ws.ts",
+		"@jsonDispatch": "./src/jsonDispatch.ts",
+		"@csv": "https://deno.land/std@0.160.0/encoding/csv.ts"
+	}
+}
