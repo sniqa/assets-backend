@@ -175,11 +175,9 @@ export const upload_users = async (
 
   const res = await UsersModel.insertMany(query);
 
-  const users = await UsersModel.find({}).toArray();
-
   return successRes({
     total: query.length,
     insert: res.insertedCount,
-    data: users,
+    data: await UsersModel.find({}).toArray(),
   });
 };

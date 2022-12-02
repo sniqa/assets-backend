@@ -59,14 +59,17 @@ export const create_device = async (
     }
   }
 
+  // 更新ip信息
   if (info.ip_address && info.network_type) {
     await modify_ip(client, {
       network_type: info.network_type,
       ip_address: info.ip_address,
       is_used: true,
       user: info.user,
+      device_kind: info.device_kind,
     });
 
+    // 更新网络类型信息
     const result = await NetworkTypesModel.findAndModify(
       {
         network_type: info.network_type,
@@ -110,7 +113,7 @@ export const find_devices = async (
   return successRes(res);
 };
 
-// delete
+// delete 删除
 export const delete_device = async (
   client: ClientConfig,
   data: Partial<DeviceSchema>,
@@ -160,7 +163,24 @@ export const delete_device = async (
       faildRes(ErrCode.DEVICE_DELETE_ERROR));
 };
 
-// update
+// 删除多个设备
+export const delete_many_device_by_id = async (
+  client: ClientConfig,
+  ids: string[],
+) => {
+  const res = await Promise.all(
+    ids.map(async (id) =>
+      await delete_device(
+        client,
+        await DevicesModel.findOne({ _id: new ObjectId(id) }) as DeviceSchema,
+      )
+    ),
+  );
+
+  return successRes(res.length);
+};
+
+// update 更新
 export const modify_device = async (
   client: ClientConfig,
   data: Partial<DeviceSchema>,
@@ -324,5 +344,6 @@ export const upload_devices = async (
   return successRes({
     total: contents.length,
     insert: result.length,
+    data: await DevicesModel.find({}).toArray(),
   });
 };
