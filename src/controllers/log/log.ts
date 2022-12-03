@@ -42,7 +42,7 @@ export const find_logs = async (
 	return successRes(res)
 }
 
-// 删除日志
+// 删除多个日志
 export const delete_logs = async (client: ClientConfig, request: string[]) => {
 	const ids = request.map((id) => new ObjectId(id))
 
@@ -51,6 +51,17 @@ export const delete_logs = async (client: ClientConfig, request: string[]) => {
 			$in: ids,
 		},
 	})
+
+	return successRes({ deleteNum: res })
+}
+
+// 删除单个日志
+export const delete_log = async (client: ClientConfig, id: string) => {
+
+	console.log(id);
+	
+
+	const res = await LogsModel.deleteOne({_id: new ObjectId(id)})
 
 	return successRes({ deleteNum: res })
 }
